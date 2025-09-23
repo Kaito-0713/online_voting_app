@@ -1,0 +1,135 @@
+@import "~bootstrap/scss/bootstrap";
+@import "elections";
+@import "candidates";
+@import "votes";
+
+// 背景とカードの丸み
+body {
+  background-color: #f8f9fa;
+}
+
+.card {
+  border-radius: 0.75rem;
+}
+
+// 破線枠のファイルアップロードエリア
+.border-dashed {
+  border-style: dashed !important;
+}
+
+// Dangerカラーを少し明るめに
+.btn-danger {
+  background-color: #ea2a33;
+  border-color: #ea2a33;
+}
+
+.btn-danger:hover {
+  background-color: #d21f28;
+  border-color: #d21f28;
+}
+
+/* 共通ヘッダーリンク */
+.header-link {
+  color: #6c757d;
+  font-weight: bold;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  letter-spacing: 0.08em; /* 文字間隔追加 */
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #ea2a33;
+  }
+}
+
+/* deviseヘッダー */
+.devise-header {
+  display: flex;
+  gap: 2rem; /* ログインと新規登録の間隔 */
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* deviseログインリンク */
+.devise-login-link {
+  @extend .header-link; /* application.html.erb と統一 */
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0; /* ✅ 余計なmargin削除 */
+  line-height: 1.5; /* ✅ 新規登録ボタンと高さ合わせ */
+}
+
+/* devise新規登録ボタン */
+.devise-signup-btn {
+  background-color: #ea2a33;
+  color: white;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 1.2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #d21f28;
+  }
+}
+
+/* application.html.erb ログアウトボタン */
+.logout-btn {
+  background-color: #ea2a33;
+  color: white;
+  font-weight: bold;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #d21f28;
+  }
+}
+
+nav.d-flex {
+  flex-wrap: nowrap;
+}
+
+/* nav の背景を消す */
+nav, .navbar, .header-nav {
+  background: none !important; /* 強制的に背景色を消す */
+  box-shadow: none; /* 影も付いていたら削除 */
+}
+
+/* ✅ ヒーローセクションの高さとグラデーションを調整 */
+.hero-section {
+  height: 240px;
+}
+
+.hero-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
+}
+
+.icon-wrapper {
+  width: 70px;
+  height: 70px;
+  background-color: #ffe6eb; // 薄ピンク
+  border-radius: 50%;
+  display: flex;
+  align-items: center;        // 縦方向中央
+  justify-content: center;    // 横方向中央
+  margin: 0 auto 1rem auto;
+  overflow: hidden;
+  text-align: center;
+}
+
+.icon-wrapper img.icon-img {
+  max-width: 50%;             // 円のサイズに対して適切に
+  max-height: 50%;
+  display: block;             // インライン要素ではなくブロック化
+  margin: auto;               // 中央寄せ
+  object-fit: contain;        // 縦横比を維持
+}

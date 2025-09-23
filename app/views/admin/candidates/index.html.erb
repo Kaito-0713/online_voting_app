@@ -1,0 +1,71 @@
+<h1 class="mb-4"><%= @election.title %> の候補者一覧</h1>
+
+<% if notice.present? %>
+  <div class="alert alert-success"><%= notice %></div>
+<% end %>
+
+<!-- 検索フォーム -->
+<div class="card p-3 mb-4 shadow-sm">
+  <%= form_with url: search_election_candidates_path(@election), method: :get, local: true, class: "row g-3" do |f| %>
+    <div class="col-12 col-md-auto">
+      <%= f.label :keyword, "候補者検索", class: "form-label fw-bold" %>
+    </div>
+    <div class="col-12 col-md">
+      <%= f.text_field :keyword, value: params[:keyword], placeholder: "名前または政策で検索", class: "form-control" %>
+    </div>
+    <div class="col-12 col-md-auto">
+      <%= f.submit "検索", class: "btn btn-primary w-100" %>
+    </div>
+  <% end %>
+</div>
+
+<!-- 候補者追加ボタン -->
+<div class="mb-3">
+  <%= link_to "候補者を追加", new_admin_election_candidate_path(@election), class: "btn btn-primary" %>
+</div>
+
+<% if @candidates.any? %>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>名前</th>
+          <th>所属政党</th>
+          <th>政策紹介</th>
+          <th>管理操作</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @candidates.each do |candidate| %>
+          <tr>
+            <td class="fw-bold text-truncate" style="max-width: 150px;" title="<%= candidate.name %>">
+              <%= candidate.name %>
+            </td>
+            <td class="text-truncate" style="max-width: 120px;" title="<%= candidate.party %>">
+              <%= candidate.party.presence || "未設定" %>
+            </td>
+            <td class="text-truncate" style="max-width: 250px;" title="<%= candidate.policy %>">
+              <%= candidate.policy.presence || "未設定" %>
+            </td>
+            <td class="d-flex flex-column flex-sm-row gap-2">
+              <%= link_to "詳細", admin_election_candidate_path(@election, candidate), class: "btn btn-info btn-sm" %>
+              <%= link_to "編集", edit_admin_election_candidate_path(@election, candidate), class: "btn btn-warning btn-sm" %>
+              <%= link_to "削除", admin_election_candidate_path(@election, candidate),
+                          data: { turbo_confirm: "本当に削除しますか？" },
+                          method: :delete,
+                          class: "btn btn-danger btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="text-muted">候補者がまだ登録されていません。</p>
+<% end %>
+
+<!-- ✅ 選挙一覧に戻るボタン -->
+<div class="mt-4">
+  <%= link_to "← 選挙一覧に戻る", admin_elections_path, class: "btn btn-secondary" %>
+</div>

@@ -1,0 +1,52 @@
+<div class="card shadow p-4">
+  <%= form_with(model: [:admin, @election, @candidate], local: true) do |form| %>
+    <% if @candidate.errors.any? %>
+      <div class="alert alert-danger">
+        <h5 class="fw-bold">
+          <%= pluralize(@candidate.errors.count, "件のエラー") %>があります:
+        </h5>
+        <ul class="mb-0">
+          <% @candidate.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= form.label :image, "候補者画像", class: "form-label fw-bold" %>
+      <% if @candidate.image.attached? %>
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <%= image_tag @candidate.image.variant(resize_to_limit: [150, 150]),
+                        class: "rounded shadow border" %>
+          <%= link_to "画像を削除",
+                      remove_image_admin_election_candidate_path(@election, @candidate),
+                      method: :delete,
+                      data: { turbo_confirm: "画像を削除しますか？" },
+                      class: "btn btn-outline-danger btn-sm" %>
+        </div>
+      <% end %>
+      <%= form.file_field :image, accept: "image/*", class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :name, "候補者名", class: "form-label fw-bold" %>
+      <%= form.text_field :name, class: "form-control", placeholder: "候補者名を入力" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :party, "所属政党", class: "form-label fw-bold" %>
+      <%= form.text_field :party, class: "form-control", placeholder: "例: ○○党" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :policy, "政策紹介", class: "form-label fw-bold" %>
+      <%= form.text_area :policy, class: "form-control", rows: 4, placeholder: "政策や公約を入力" %>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-end gap-2">
+      <%= form.submit (@candidate.persisted? ? "更新する" : "保存する"), class: "btn btn-primary px-4" %>
+      <%= link_to "戻る", admin_election_candidates_path(@election), class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

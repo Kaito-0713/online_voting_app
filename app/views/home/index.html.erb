@@ -1,0 +1,65 @@
+<div class="container my-5">
+  <!-- ヒーローセクション -->
+  <div class="position-relative mb-5 rounded-4 shadow-sm overflow-hidden">
+    <%= image_tag "voting_bg.jpg", class: "w-100", style: "height: 350px; object-fit: cover;", alt: "投票イメージ" %>
+
+    <!-- オーバーレイ -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-end p-4"
+         style="background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);">
+      <h2 class="text-white fw-bold display-6 mb-2">オンライン投票へようこそ</h2>
+      <p class="text-white-50 mb-0">安全、確実、そして簡単に一票を投じることができます。</p>
+    </div>
+  </div>
+
+  <!-- ✅ 重要なお知らせ -->
+  <h3 class="fw-bold mb-4 text-center">重要なお知らせ</h3>
+  <div class="row g-4">
+    <!-- 投票期間 -->
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 h-100 text-center">
+        <div class="card-body">
+          <div class="icon-wrapper">
+            <%= image_tag "calendar.png", class: "icon-img mb-3" %>
+          </div>
+          <h5 class="fw-semibold mb-2">投票期間</h5>
+          <p class="text-muted">2024年7月1日〜2024年7月15日</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 最新ニュース -->
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 h-100 text-center">
+        <div class="card-body">
+          <div class="icon-wrapper">
+            <%= image_tag "news.png", class: "icon-img mb-3" %>
+          </div>
+          <h5 class="fw-semibold mb-2">最新ニュース</h5>
+          <p class="text-muted">選挙に関する最新情報と告知をご確認ください。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 候補者情報 -->
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 h-100 text-center">
+        <div class="card-body">
+        <div class="icon-wrapper">
+          <%= image_tag "candidate.png", class: "icon-img mb-3" %>
+        </div>
+          <h5 class="fw-semibold mb-2">候補者情報</h5>
+          <p class="text-muted">投票前に候補者とその公約について学びましょう。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ 投票開始ボタン -->
+  <div class="text-center mt-5">
+    <p class="text-muted mb-3">準備ができましたら、下のボタンから投票を開始してください。</p>
+    <%= link_to elections_path,
+      class: "btn btn-danger btn-lg px-5 shadow-sm d-inline-flex align-items-center" do %>
+      投票を開始する
+    <% end %>
+  </div>
+</div>

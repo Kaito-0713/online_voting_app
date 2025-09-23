@@ -1,0 +1,42 @@
+<%= form_with(model: [@election, @candidate], local: true) do |form| %>
+  <% if @candidate.errors.any? %>
+    <div style="color: red;">
+      <h4><%= pluralize(@candidate.errors.count, "件のエラー") %>が発生しました:</h4>
+      <ul>
+        <% @candidate.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "候補者名" %><br>
+    <%= form.text_field :name, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :party, "所属政党" %><br>
+    <%= form.text_field :party, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :policy, "政策紹介" %>
+    <%= form.text_area :policy %>
+  </div>
+
+  <div>
+    <%= form.label :image, "候補者の写真" %><br>
+    <%= form.file_field :image, direct_upload: true %>
+    <% if @candidate.image.attached? %>
+      <div class="mt-2">
+        現在の画像:<br>
+        <%= image_tag @candidate.image.variant(resize_to_limit: [150, 150]), %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,110 @@
+.custom-table {
+  border: 1px solid #f8d7da; /* 薄いピンクの枠 */
+}
+
+.custom-table thead th {
+  background-color: #fff5f5; /* 薄いピンク背景 */
+  color: #ea2a33;
+  border-bottom: 2px solid #f8d7da;
+  font-weight: bold;
+  padding: 1rem; /* ✅ 縦の余白を広げる */
+}
+
+.custom-table tbody td {
+  border-top: 1px solid #f8d7da;
+  padding: 1rem; /* ✅ 縦の余白を広げる */
+}
+
+.candidate-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #f8d7da; /* ✅ 薄いピンクに変更 */
+}
+
+.custom-btn-view {
+  background-color: #ea2a33;
+  color: white;
+  font-weight: bold;
+  padding: 0.3rem 0.8rem;
+}
+
+.custom-btn-view:hover {
+  background-color: #c81f29;
+  color: white;
+}
+
+.search-form {
+  max-width: 450px;
+}
+
+.search-form .form-control {
+  flex: 1;
+}
+
+.search-btn {
+  background-color: #ea2a33; /* ✅ 青から変更 */
+  color: white;
+  font-weight: bold;
+}
+
+.search-btn:hover {
+  background-color: #c81f29;
+  color: white;
+}
+
+.custom-badge-ended {
+  background-color: #f8d7da;
+  color: #ea2a33;
+  font-weight: bold;
+}
+
+/* 候補者詳細ページ */
+.candidate-detail-card {
+  border: 2px solid #f8d7da; /* 薄いピンク */
+  min-height: 420px; /* 少し小さく */
+  display: flex;
+}
+
+.candidate-detail-card img {
+  object-fit: cover;
+  height: 100%;
+  border: none; /* 画像自体には枠線をつけない */
+}
+
+.candidate-party {
+  color: #ea2a33;
+  font-size: 1.1rem;
+}
+
+.card-body h2 {
+  font-size: 1.8rem;
+}
+
+.card-body h5 {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.btn-danger {
+  background-color: #ea2a33;
+  border-color: #ea2a33;
+  font-size: 1rem;
+}
+
+.btn-danger:hover {
+  background-color: #c82128;
+  border-color: #c82128;
+}
+
+.btn-outline-danger {
+  color: #ea2a33;
+  border-color: #ea2a33;
+  font-weight: bold;
+}
+
+.btn-outline-danger:hover {
+  background-color: #ea2a33;
+  color: #fff;
+}

@@ -1,0 +1,22 @@
+<h1><%= @election.title %> の投票結果</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>候補者名</th>
+      <th>所属政党</th>
+      <th>得票数</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @candidates.each do |candidate| %>
+      <tr>
+        <td><%= candidate.name %></td>
+        <td><%= candidate.party %></td>
+        <td><%= candidate.votes.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "選挙一覧に戻る", admin_elections_path, class: "btn btn-outline-secondary mt-3" %>

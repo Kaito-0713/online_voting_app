@@ -1,0 +1,30 @@
+<div class="vote-container my-5"> 
+  <!-- ページタイトル -->
+  <h1 class="vote-title text-center mb-4 fw-bold"><%= @election.title %> への投票</h1>
+
+  <%= form_with url: election_votes_path(@election), method: :post, local: true do |f| %>
+    <div class="vote-card p-4">
+      <div class="vote-list">
+        <% @candidates.each do |candidate| %>
+          <label class="vote-item d-flex justify-content-between align-items-center mb-2">
+            <span class="fw-semibold">
+              <%= candidate.name %> 
+              <span class="vote-party small">(<%= candidate.party %>)</span>
+            </span>
+            <%= f.radio_button :candidate_id, candidate.id, id: "candidate_#{candidate.id}", class: "vote-radio" %>
+          </label>
+        <% end %>
+      </div>
+
+      <!-- 投票ボタン（中央寄せ） -->
+      <div class="vote-actions d-flex justify-content-center mt-4">
+        <%= f.submit "投票する", class: "btn vote-submit px-4" %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- 戻るボタン（カード外、中央寄せ） -->
+  <div class="text-center mt-5">
+    <%= link_to "← 選挙一覧に戻る", elections_path, class: "btn btn-outline-secondary px-4 fw-bold" %>
+  </div>
+</div>

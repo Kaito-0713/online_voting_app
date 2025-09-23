@@ -1,0 +1,32 @@
+<h1>管理者用 選挙一覧</h1>
+
+<%= link_to "新規選挙作成", new_admin_election_path, class: "btn btn-primary mb-3" %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>説明</th>
+      <th>投票期間</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @elections.each do |election| %>
+      <tr>
+        <td><%= election.title %></td>
+        <td><%= election.description %></td>
+        <td><%= election.start_at %> 〜 <%= election.end_at %></td>
+        <td>
+          <%= link_to "編集", edit_admin_election_path(election), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "削除", admin_election_path(election),
+                      method: :delete,
+                      data: { confirm: "削除してよろしいですか？" },
+                      class: "btn btn-sm btn-danger" %>
+          <%= link_to "候補者管理", admin_election_candidates_path(election), class: "btn btn-sm btn-primary" %>
+          <%= link_to "結果", results_admin_election_path(election), class: "btn btn-sm btn-success" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

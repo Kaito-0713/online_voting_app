@@ -1,0 +1,15 @@
+<h1>候補者一覧</h1>
+
+<p><%= link_to "候補者を追加", new_election_candidate_path(@election) %></p>
+
+<ul>
+  <% @candidates.each do |candidate| %>
+    <li>
+      <%= candidate.name %>（<%= candidate.party %>）
+      <%= link_to "編集", edit_election_candidate_path(@election, candidate) %> |
+      <%= link_to "削除", election_candidate_path(@election, candidate),
+                    method: :delete,
+                    data: { confirm: "本当に削除しますか？" } %>
+    </li>
+  <% end %>
+</ul>

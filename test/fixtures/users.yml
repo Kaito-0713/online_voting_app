@@ -1,0 +1,20 @@
+admin:
+  email: "admin@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  name: "管理者"
+  verification_id: "admin001"
+  admin: true
+
+user_one:
+  email: "user1@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  name: "ユーザー1"
+  verification_id: "user001"
+  admin: false
+
+user_two:
+  email: "user2@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  name: "ユーザー2"
+  verification_id: "user002"
+  admin: false

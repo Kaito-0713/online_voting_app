@@ -1,0 +1,24 @@
+<%# ログインリンク（ログイン画面以外で表示） %>
+<%- if controller_name != 'sessions' %>
+  <%= link_to "ログインはこちら", new_session_path(resource_name), class: "d-block mb-2" %>
+<% end %>
+
+<%# 新規登録リンク %>
+<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+  <%= link_to "新規登録はこちら", new_registration_path(resource_name), class: "d-block mb-2" %>
+<% end %>
+
+<%# パスワードリセットリンク %>
+<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+  <%= link_to "パスワードをお忘れですか？", new_password_path(resource_name), class: "d-block mb-2" %>
+<% end %>
+
+<%# メール確認リンク（confirmable 使用時のみ） %>
+<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+  <%= link_to "確認メールを再送信する", new_confirmation_path(resource_name), class: "d-block mb-2" %>
+<% end %>
+
+<%# アカウントロック解除リンク（lockable 使用時のみ） %>
+<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+  <%= link_to "ロック解除メールを再送信する", new_unlock_path(resource_name), class: "d-block mb-2" %>
+<% end %>

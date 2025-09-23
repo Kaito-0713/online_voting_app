@@ -1,0 +1,41 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="card shadow-lg p-4" style="max-width: 480px; width: 100%;">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">アカウントを作成</h2>
+      <p class="text-muted small">オンラインで投票を始めましょう</p>
+    </div>
+
+    <%= form_with model: resource, url: registration_path(resource_name), local: true, class: "needs-validation" do |f| %>
+      <div class="mb-3">
+        <%= f.label :name, "氏名", class: "form-label" %>
+        <%= f.text_field :name, class: "form-control", placeholder: "氏名を入力してください", required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :email, "メールアドレス", class: "form-label" %>
+        <%= f.email_field :email, class: "form-control", placeholder: "メールアドレスを入力してください", required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password, "パスワード", class: "form-label" %>
+        <%= f.password_field :password, class: "form-control", placeholder: "パスワードを入力してください", required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :identification_number, "本人確認用ID", class: "form-label" %>
+        <%= f.text_field :identification_number, class: "form-control", placeholder: "本人確認用IDを入力してください", required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :id_document, "本人確認書類", class: "form-label" %>
+        <div class="border border-2 border-dashed p-4 text-center rounded">
+          <%= f.file_field :id_document, class: "form-control", style: "border:none;" %>
+          <p class="small text-muted mt-2">PNG, JPG, GIF up to 10MB</p>
+        </div>
+      </div>
+
+      <%= f.submit "新規登録", class: "btn btn-danger w-100" %>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,21 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="card shadow-lg p-4" style="max-width: 420px; width: 100%;">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">パスワード再設定</h2>
+      <p class="text-muted small">登録済みのメールアドレスを入力してください</p>
+    </div>
+
+    <%= form_with model: resource, url: password_path(resource_name), local: true, class: "needs-validation" do |f| %>
+      <div class="mb-3">
+        <%= f.email_field :email, class: "form-control", placeholder: "メールアドレス", required: true %>
+        <p class="small text-muted mt-2">パスワード再設定用のリンクをメールで送信します</p>
+      </div>
+
+      <%= f.submit "パスワード再設定メールを送信", class: "btn btn-danger w-100" %>
+    <% end %>
+
+    <div class="text-center mt-3">
+      <%= link_to "ログイン画面に戻る", new_session_path(resource_name), class: "text-danger small" %>
+    </div>
+  </div>
+</div>

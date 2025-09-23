@@ -1,0 +1,90 @@
+<div class="container my-5" style="max-width: 1000px;"> <!-- ✅ 横幅を広く -->
+  <h1 class="text-center text-dark fw-bold mb-4">
+    <%= @election.title %> の候補者一覧
+  </h1>
+
+  <p class="text-muted mb-3">
+    投票開始日: <%= @election.start_at.present? ? "#{@election.start_at.strftime('%Y年%m月%d日')}(#{%w(日 月 火 水 木 金 土)[@election.start_at.wday]}) #{@election.start_at.strftime('%H:%M')}" : "未設定" %><br>
+    投票終了日: <%= @election.end_at.present? ? "#{@election.end_at.strftime('%Y年%m月%d日')}(#{%w(日 月 火 水 木 金 土)[@election.end_at.wday]}) #{@election.end_at.strftime('%H:%M')}" : "未設定" %>
+  </p>
+
+  <% if @election.start_at.present? && @election.end_at.present? %>
+    <% if @election.start_at <= Time.current && Time.current <= @election.end_at %>
+      <span class="badge bg-success">投票受付中</span>
+    <% elsif Time.current < @election.start_at %>
+      <span class="badge bg-warning text-dark">投票開始前</span>
+    <% else %>
+      <span class="badge custom-badge-ended">投票終了</span>
+    <% end %>
+  <% else %>
+    <span class="badge bg-danger">日程未設定</span>
+  <% end %>
+
+  <!-- ✅ 検索フォームを中央寄せ -->
+  <div class="my-4 d-flex justify-content-center">
+    <%= form_with url: search_election_candidates_path(@election), method: :get, local: true, class: "d-flex gap-2 search-form" do |f| %>
+      <%= f.text_field :keyword, value: params[:keyword],
+        placeholder: "名前または政策で検索",
+        class: "form-control" %>
+      <%= f.submit "検索", class: "btn search-btn" %>
+    <% end %>
+  </div>
+
+  <!-- ✅ テーブルのマージンを少し下げる -->
+  <div class="table-responsive shadow-sm rounded custom-table mb-5">
+    <table class="table table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th scope="col">候補者</th>
+          <th scope="col">所属政党</th>
+          <th scope="col">政策紹介</th>
+          <th scope="col" class="text-center">詳細</th>
+          <% if current_user&.admin? %>
+            <th scope="col" class="text-center">管理者操作</th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @candidates.each do |candidate| %>
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <% resized_path = "/images/candidates/candidate_#{candidate.id}_resized.jpg" %>
+                <% if File.exist?(Rails.root.join("public", "images", "candidates", "candidate_#{candidate.id}_resized.jpg")) %>
+                  <%= image_tag resized_path, class: "candidate-img me-3" %>
+                <% else %>
+                  <%= image_tag "default_candidate.png", class: "candidate-img me-3" %>
+                <% end %>
+                <span class="fw-bold text-dark"><%= candidate.name %></span>
+              </div>
+            </td>
+
+            <td class="text-secondary"><%= candidate.party %></td>
+            <td class="text-secondary"><%= candidate.policy %></td>
+
+            <td class="text-center">
+              <%= link_to "詳細を見る", election_candidate_path(@election, candidate),
+                    class: "btn btn-sm custom-btn-view" %>
+            </td>
+
+            <% if current_user&.admin? %>
+              <td class="text-center">
+                <%= link_to "編集", edit_admin_election_candidate_path(@election, candidate),
+                    class: "btn btn-warning btn-sm me-1" %>
+                <%= link_to "削除", admin_election_candidate_path(@election, candidate),
+                    method: :delete,
+                    data: { confirm: "削除してもよろしいですか？" },
+                    class: "btn btn-danger btn-sm" %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 選挙一覧に戻るボタン -->
+  <div class="mb-4 d-flex justify-content-center">
+    <%= link_to "← 選挙一覧に戻る", elections_path, class: "btn btn-red-outline" %>
+  </div>
+</div>

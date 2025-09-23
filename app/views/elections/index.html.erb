@@ -1,0 +1,63 @@
+<% content_for :stylesheets do %>
+  <%= stylesheet_pack_tag 'election', media: 'all', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
+<div class="election-container">
+  <h1 class="mb-5 fw-bold">選挙一覧</h1>
+
+  <% @elections.each do |election| %>
+    <% status_class = if election.start_at && election.end_at
+                        if election.start_at <= Time.current && Time.current <= election.end_at
+                          "ongoing"
+                        elsif Time.current < election.start_at
+                          "upcoming"
+                        else
+                          "ended"
+                        end
+                      else
+                        "upcoming"
+                      end %>
+
+    <div class="election-card <%= 'election-ended' if status_class == 'ended' %> mb-4">
+      <div class="card-image" style="background-image: url('<%= asset_path('building.jpg') %>');"></div>
+      <div class="card-body">
+        <div class="card-info">
+          <h3 class="fw-bold"><%= election.title %></h3>
+          <% if election.start_at && election.end_at %>
+            <p class="mb-1">投票開始日: <%= election.start_at.strftime('%Y年%m月%d日') %></p>
+            <p>投票終了日: <%= election.end_at.strftime('%Y年%m月%d日') %></p>
+          <% else %>
+            <p class="mb-1 text-danger">日程未設定</p>
+          <% end %>
+
+          <p class="election-status <%= status_class %>">
+            <% if status_class == 'ongoing' %>
+              投票受付中
+            <% elsif status_class == 'upcoming' %>
+              投票開始前
+            <% else %>
+              投票終了
+            <% end %>
+          </p>
+        </div>
+
+        <!-- ボタン群（ここを正しく if/else でまとめています） -->
+        <div class="mt-3 d-flex align-items-center">
+          <% if status_class == 'ongoing' %>
+            <%= link_to "候補者一覧を見る", election_candidates_path(election),
+                class: "btn btn-election me-2 ongoing" %>
+            <%= link_to "投票する", new_election_vote_path(election),
+                class: "btn btn-election ongoing" %>
+          <% else %>
+            <button class="btn btn-election disabled me-2" disabled>候補者一覧を見る</button>
+            <button class="btn btn-election disabled" disabled>投票する</button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+    <div class="mt-5 mb-5 d-flex justify-content-center">
+    <%= link_to "← ホームに戻る", root_path, class: "btn btn-red-outline" %>
+  </div>
+</div>

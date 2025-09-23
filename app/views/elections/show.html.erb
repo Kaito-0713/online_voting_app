@@ -1,0 +1,60 @@
+<% if user_signed_in? && current_user.voted_for?(@election) %>
+  <!-- ✅ 投票済み表示 -->
+  <div class="vote-complete-container my-5 text-center">
+    <!-- アイコン -->
+    <div class="mb-4">
+      <i class="bi bi-check-circle-fill" style="font-size: 3rem; color: #ea2a33;"></i>
+    </div>
+
+    <!-- 選挙タイトル（中央 & 赤） -->
+    <h1 class="fw-bold mb-3"><%= @election.title %></h1>
+
+    <!-- 投票日時 -->
+    <% vote = current_user.votes.find_by(election_id: @election.id) %>
+    <% if vote %>
+      <% candidate = Candidate.find_by(id: vote.candidate_id) %>
+      <p class="text-muted mb-4">
+        投票日時: <%= vote.created_at.strftime("%Y/%m/%d %H:%M") %>
+      </p>
+
+      <!-- 投票した候補者カード -->
+      <div class="card shadow-sm mx-auto mb-4 d-flex justify-content-center align-items-center"
+           style="max-width: 400px; height: 220px; border: 1px solid #f8c8d8; border-radius: 15px;">
+        <div class="card-body text-center d-flex flex-column justify-content-center">
+          <h3 class="fw-bold mb-2"><%= candidate.name %></h3>
+          <p class="text-muted mb-0">（<%= candidate.party %>）</p>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- ホームに戻るボタン -->
+    <%= link_to "ホームに戻る", root_path,
+                class: "btn btn-outline-danger px-4 py-2 fw-bold" %>
+  </div>
+
+<% else %>
+  <!-- ✅ 通常の選挙詳細表示 -->
+  <h1 class="mb-4"><%= @election.title %></h1>
+  <p class="mb-5"><%= @election.description %></p>
+
+  <h3 class="mb-3">候補者一覧</h3>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @candidates.each do |candidate| %>
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title"><%= candidate.name %></h5>
+            <p class="card-text"><%= candidate.party %></p>
+          </div>
+          <div class="card-footer text-center">
+            <% if user_signed_in? %>
+              <%= link_to "投票する", new_election_vote_path(@election), class: "btn btn-success btn-sm" %>
+            <% else %>
+              <%= link_to "ログインして投票する", new_user_session_path, class: "btn btn-primary btn-sm" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

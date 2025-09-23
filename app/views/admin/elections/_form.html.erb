@@ -1,0 +1,45 @@
+<!-- app/views/admin/elections/_form.html.erb -->
+<%= form_with(model: [:admin, election], local: true) do |form| %>
+  <% if election.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(election.errors.count, "件のエラー") %>が発生しました:</h4>
+      <ul>
+        <% election.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, "タイトル" %>
+    <%= form.text_field :title, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "説明" %>
+    <%= form.text_area :description, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :start_at, "投票開始日時" %>
+    <%= form.datetime_select :start_at,
+        order: [:year, :month, :day],
+        use_month_numbers: false,
+        start_year: Time.current.year,
+        class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :end_at, "投票終了日時" %>
+    <%= form.datetime_select :end_at,
+        order: [:year, :month, :day],
+        use_month_numbers: false,
+        start_year: Time.current.year,
+        class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.submit "作成", class: "btn btn-primary" %>
+  </div>
+<% end %>
