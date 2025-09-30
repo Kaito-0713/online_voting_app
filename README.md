@@ -14,6 +14,13 @@
 
 ## 3. サービスURL
 🔗 [本番環境はこちら](https://online-voting-app-kaito-new-07e23065ff59.herokuapp.com)
+【ユーザー】
+Eメール:user@example.com
+パスワード:password
+
+【管理者】
+Eメール:admin@example.com
+パスワード:password123
 
 ---
 
@@ -60,56 +67,68 @@
 ---
 
 ## 8. ER図
-┌──────────────────────────┐
-│          User            │
-├──────────────────────────┤
-│ id: integer              │
-│ email: string (unique)   │
-│ encrypted_password: string│
-│ reset_password_token: string (unique)│
-│ reset_password_sent_at: datetime│
-│ remember_created_at: datetime│
-│ name: string             │
-│ verification_id: string (unique)│
-│ identification_number: string (unique)│
-│ voted: boolean (default: false)│
-│ admin: boolean (default: false)│
-│ role: string             │
-│ created_at: datetime     │
-│ updated_at: datetime     │
-└───────────┬──────────────┘
-            │ has_many :votes
-            │
-            ▼
-┌──────────────────────────┐
-│          Vote            │
-├──────────────────────────┤
-│ id: integer              │
-│ user_id: integer (FK)    │
-│ candidate_id: integer (FK)│
-│ election_id: integer (FK)│
-│ created_at: datetime     │
-│ updated_at: datetime     │
-└──────┬──────────┬────────┘
-       │          │
-belongs_to    belongs_to
-       │          │
-       ▼          ▼
-┌──────────────────────────┐      ┌──────────────────────────┐
-│       Candidate          │      │        Election          │
-├──────────────────────────┤      ├──────────────────────────┤
-│ id: integer              │      │ id: integer              │
-│ name: string             │      │ title: string            │
-│ party: string            │      │ description: text        │
-│ policy: text             │      │ start_at: datetime       │
-│ election_id: integer (FK)│      │ end_at: datetime         │
-│ created_at: datetime     │      │ created_at: datetime     │
-│ updated_at: datetime     │      │ updated_at: datetime     │
-└──────────────┬───────────┘      └──────────────┬───────────┘
-               │ belongs_to                       │ has_many :candidates
-               └──────────────────────────────────┘
++--------------------+       +--------------------+       +--------------------+
+|      users         |       |      elections      |       |     candidates     |
++--------------------+       +--------------------+       +--------------------+
+| id (PK)            |<----->| id (PK)            |<----->| id (PK)            |
+| email              |       | title              |       | name               |
+| encrypted_password |       | description        |       | party              |
+| name               |       | start_at           |       | policy             |
+| verification_id    |       | end_at             |       | election_id (FK)   |
+| voted              |       | created_at         |       | created_at         |
+| admin              |       | updated_at         |       | updated_at         |
+| identification_no  |       +--------------------+       +--------------------+
+| role               |
++--------------------+
 
----
+         | 1                       1..*                 1..*
+         |                                          
+         |                                          
+         v                                          
++--------------------+                               
+|       votes        |                               
++--------------------+                               
+| id (PK)            |                               
+| user_id (FK)       |-----------------------------> users.id
+| candidate_id (FK)  |-----------------------------> candidates.id
+| election_id (FK)   |-----------------------------> elections.id
+| created_at         |
+| updated_at         |
++--------------------+
+
++----------------------------+
+| active_storage_blobs       |
++----------------------------+
+| id (PK)                    |
+| key                        |
+| filename                   |
+| content_type               |
+| metadata                   |
+| service_name               |
+| byte_size                  |
+| checksum                   |
+| created_at                 |
++----------------------------+
+
++----------------------------+
+| active_storage_attachments |
++----------------------------+
+| id (PK)                    |
+| name                       |
+| record_type                |
+| record_id                  |
+| blob_id (FK) --------------> active_storage_blobs.id
+| created_at                 |
++----------------------------+
+
++-------------------------------+
+| active_storage_variant_records|
++-------------------------------+
+| id (PK)                       |
+| blob_id (FK) -----------------> active_storage_blobs.id
+| variation_digest               |
++-------------------------------+
+
 
 ## 9. 今後の展望
 - **直近の修正予定**
