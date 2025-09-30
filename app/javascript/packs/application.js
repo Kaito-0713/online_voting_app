@@ -1,6 +1,9 @@
 // app/javascript/packs/application.js
 
-import "../stylesheets/application.scss"  // CSS -> SCSS に変更
+import "../stylesheets/application.scss"
+import "../stylesheets/elections.scss"
+import "../stylesheets/candidates.scss"
+import "../stylesheets/votes.scss"
 
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
